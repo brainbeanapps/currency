@@ -98,11 +98,13 @@ class TestCurrencyRateUpdate(common.SavepointCase):
         self.ecb_provider._scheduled_update()
 
         rates = self.CurrencyRate.search([
+            ('provider_id', '=', self.ecb_provider.id),
             ('currency_id', '=', self.usd_currency.id),
         ])
         self.assertEquals(len(rates), 1)
 
         self.CurrencyRate.search([
+            ('provider_id', '=', self.ecb_provider.id),
             ('currency_id', '=', self.usd_currency.id),
         ]).unlink()
 
@@ -111,6 +113,7 @@ class TestCurrencyRateUpdate(common.SavepointCase):
         self.ecb_provider._scheduled_update()
 
         rates = self.CurrencyRate.search([
+            ('provider_id', '=', self.ecb_provider.id),
             ('company_id', '=', self.company.id),
             ('currency_id', 'in', [
                 self.usd_currency.id,
@@ -120,5 +123,6 @@ class TestCurrencyRateUpdate(common.SavepointCase):
         self.assertEquals(len(rates), 1)
 
         self.CurrencyRate.search([
+            ('provider_id', '=', self.ecb_provider.id),
             ('company_id', '=', self.company.id),
         ]).unlink()
